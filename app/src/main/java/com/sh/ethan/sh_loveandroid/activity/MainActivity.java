@@ -3,6 +3,7 @@ package com.sh.ethan.sh_loveandroid.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.sh.ethan.sh_loveandroid.R;
@@ -25,6 +27,7 @@ import com.sh.ethan.sh_loveandroid.fragment.HomeNewsFragment;
 import com.sh.ethan.sh_loveandroid.http.NoHttpManager;
 import com.sh.ethan.sh_loveandroid.http.OnHttpRequestListener;
 import com.squareup.picasso.Picasso;
+import com.wang.avi.AVLoadingIndicatorView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -38,6 +41,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by ethan on 2018/4/16.
@@ -59,6 +63,10 @@ public class MainActivity extends LoveAndroidActivity implements NavigationView.
     DrawerLayout drawerLayout;
     @BindView(R.id.nav_view)
     NavigationView nav_view;
+    @BindView(R.id.bannerLoadding)
+    AVLoadingIndicatorView bannerLoadding;
+    @BindView(R.id.nodata)
+    ImageView nodata;
 
     @Override
     protected int inflateLayout() {
@@ -135,6 +143,9 @@ public class MainActivity extends LoveAndroidActivity implements NavigationView.
      */
     private void initBanner(List<Home_Banner_Bean> home_banner_beans) {
         if (!home_banner_beans.isEmpty()) {
+            home_banner.setVisibility(View.VISIBLE);
+            bannerLoadding.setVisibility(View.GONE);
+            nodata.setVisibility(View.GONE);
             List<String> bannerTitles = new ArrayList<>();
             List<String> bannerImages = new ArrayList<>();
             for (int i = 0; i < home_banner_beans.size(); i++) {
@@ -163,6 +174,10 @@ public class MainActivity extends LoveAndroidActivity implements NavigationView.
             home_banner.setIndicatorGravity(BannerConfig.CENTER);
             home_banner.start();
             home_banner.startAutoPlay();
+        } else {
+            home_banner.setVisibility(View.GONE);
+            bannerLoadding.setVisibility(View.GONE);
+            nodata.setVisibility(View.VISIBLE);
         }
     }
 
@@ -202,12 +217,17 @@ public class MainActivity extends LoveAndroidActivity implements NavigationView.
                     initBanner(home_banner_beans);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    home_banner.setVisibility(View.GONE);
+                    bannerLoadding.setVisibility(View.GONE);
+                    nodata.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onRequestFail(String msg) {
-
+                home_banner.setVisibility(View.GONE);
+                bannerLoadding.setVisibility(View.GONE);
+                nodata.setVisibility(View.VISIBLE);
             }
         });
     }

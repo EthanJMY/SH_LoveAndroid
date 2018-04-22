@@ -32,10 +32,11 @@ public class NoHttpManager {
         }
         return manager;
     }
+
     /**
      * 获取首页banner图
      */
-    public void getHomeBanner(String url,final OnHttpRequestListener<String> listener) {
+    public void getHomeBanner(String url, final OnHttpRequestListener<String> listener) {
         Request<String> request = new StringRequest(UrlContants.HOME_BANNER,
                 RequestMethod.GET);
         requestQueue.add(1, request, new OnResponseListener<String>() {
@@ -45,8 +46,8 @@ public class NoHttpManager {
 
             @Override
             public void onSucceed(int what, Response<String> response) {
-                LogUtils.i("banner:"+response.get());
-                listener.onRequestSuccess("",response.get());
+                LogUtils.i("banner:" + response.get());
+                listener.onRequestSuccess("", response.get());
             }
 
             @Override
@@ -55,6 +56,7 @@ public class NoHttpManager {
 //                message.obj = "验证码发送失败";
 //                message.what = errorWhat;
 //                handler.sendMessage(message);
+                listener.onRequestFail("");
             }
 
             @Override
@@ -62,10 +64,11 @@ public class NoHttpManager {
             }
         });
     }
+
     /**
      * 获取首页新闻
      */
-    public void getHomeNews(String url,final OnHttpRequestListener<String> listener) {
+    public void getHomeNews(String url, final OnHttpRequestListener<String> listener) {
         Request<String> request = new StringRequest(url,
                 RequestMethod.GET);
         requestQueue.add(1, request, new OnResponseListener<String>() {
@@ -75,7 +78,7 @@ public class NoHttpManager {
 
             @Override
             public void onSucceed(int what, Response<String> response) {
-                listener.onRequestSuccess("",response.get());
+                listener.onRequestSuccess("", response.get());
             }
 
             @Override
@@ -84,6 +87,7 @@ public class NoHttpManager {
 //                message.obj = "验证码发送失败";
 //                message.what = errorWhat;
 //                handler.sendMessage(message);
+                listener.onRequestFail("");
             }
 
             @Override

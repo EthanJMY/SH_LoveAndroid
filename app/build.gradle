@@ -60,4 +60,11 @@ dependencies {
      * 圆角图片
      */
     compile 'com.makeramen:roundedimageview:2.3.0'
+
+    /**
+     * loadding
+     */
+    compile 'io.saeid:fab-loading:1.0.0'
+
+    compile 'com.wang.avi:library:2.1.3'
 }

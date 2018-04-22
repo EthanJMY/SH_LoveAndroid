@@ -38,8 +38,8 @@ public class LoveAndroidApplication extends Application {
     private void initializeNoHttp() {
         NoHttp.initialize(this); // NoHttp默认初始化。
         NoHttp.initialize(this, new NoHttp.Config()
-                .setConnectTimeout(30 * 1000) // 全局连接超时时间，单位毫秒。
-                .setReadTimeout(30 * 1000) // 全局服务器响应超时时间，单位毫秒。
+                .setConnectTimeout(10 * 1000) // 全局连接超时时间，单位毫秒。
+                .setReadTimeout(10 * 1000) // 全局服务器响应超时时间，单位毫秒。
         );
         requestQueue = NoHttp.newRequestQueue();
         Logger.setDebug(true); // 开启NoHttp调试模式。

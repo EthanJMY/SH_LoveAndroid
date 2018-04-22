@@ -1,8 +1,10 @@
 package com.sh.ethan.sh_loveandroid.fragment;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.sh.ethan.sh_loveandroid.R;
 import com.sh.ethan.sh_loveandroid.adapter.HomeNewsAdapter;
@@ -12,6 +14,7 @@ import com.sh.ethan.sh_loveandroid.beans.Home_News;
 import com.sh.ethan.sh_loveandroid.constant.UrlContants;
 import com.sh.ethan.sh_loveandroid.http.NoHttpManager;
 import com.sh.ethan.sh_loveandroid.http.OnHttpRequestListener;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,6 +24,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import io.saeid.fabloading.LoadingView;
 
 /**
  * Created by ethan on 2018/4/22.
@@ -31,6 +36,23 @@ public class HomeNewsFragment extends LoveAndroidFragment {
     private HomeNewsAdapter homeNewsAdapter = null;
     @BindView(R.id.home_newId)
     RecyclerView home_newsRecycler;
+    @BindView(R.id.goTop)
+    FloatingActionButton goTop;
+    @BindView(R.id.news_loadding)
+    AVLoadingIndicatorView news_loadding;
+    @BindView(R.id.nodata)
+    ImageView nodata;
+
+    @OnClick({R.id.goTop})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.goTop:
+                home_newsRecycler.smoothScrollToPosition(0);
+                break;
+            default:
+                break;
+        }
+    }
 
     @Override
     protected int inflateLayout() {
@@ -126,16 +148,33 @@ public class HomeNewsFragment extends LoveAndroidFragment {
                     } else {
                         home_newsList.addAll(home_newss);
                     }
-
+                    if (!home_newsList.isEmpty()) {
+                        home_newsRecycler.setVisibility(View.VISIBLE);
+                        goTop.setVisibility(View.VISIBLE);
+                        news_loadding.setVisibility(View.GONE);
+                        nodata.setVisibility(View.GONE);
+                    } else {
+                        home_newsRecycler.setVisibility(View.GONE);
+                        goTop.setVisibility(View.GONE);
+                        news_loadding.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                    }
                     homeNewsAdapter.setDataList(home_newss);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    home_newsRecycler.setVisibility(View.GONE);
+                    goTop.setVisibility(View.GONE);
+                    news_loadding.setVisibility(View.GONE);
+                    nodata.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onRequestFail(String msg) {
-
+                home_newsRecycler.setVisibility(View.GONE);
+                goTop.setVisibility(View.GONE);
+                news_loadding.setVisibility(View.GONE);
+                nodata.setVisibility(View.VISIBLE);
             }
         });
     }

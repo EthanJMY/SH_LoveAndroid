@@ -14,6 +14,8 @@
     <color name="thirdTitle">#808080</color>
     <!--话题-->
     <color name="topic">#87CEEB</color>
+    <!--三级标题-->
+    <color name="topicbg">#99808080</color>
     <!--CardView的统一背景色-->
     <color name="cardView_bg">#F5F5F5</color>
 
