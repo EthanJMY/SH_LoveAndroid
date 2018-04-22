@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">极品粤利粤</string>
+    <string name="tip_noActivity">未打开activity</string>
+    <string name="double_click_back">双击退出程序？</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

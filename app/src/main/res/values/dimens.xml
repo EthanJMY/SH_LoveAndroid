@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="size_250dp">250dp</dimen>
+    <dimen name="size_64dp">64dp</dimen>
+    <dimen name="size_48dp">48dp</dimen>
+    <dimen name="size_5dp">5dp</dimen>
+    <dimen name="size_16dp">16dp</dimen>
+    <dimen name="size_18dp">18dp</dimen>
+    <dimen name="size_10dp">10dp</dimen>
+    <dimen name="size_25dp">25dp</dimen>
+    <dimen name="size_220dp">220dp</dimen>
+    <dimen name="size_80dp">80dp</dimen>
+
+</resources>
