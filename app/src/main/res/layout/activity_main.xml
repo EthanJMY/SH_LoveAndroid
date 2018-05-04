@@ -63,7 +63,7 @@
                                 android:scaleType="centerCrop"
                                 android:src="@mipmap/loadding_hor"
                                 android:visibility="gone"
-                                app:image_scale_type="fit_center" />
+                                app:image_scale_type="center_crop" />
 
                             <ImageView
                                 android:id="@+id/nodata"
@@ -111,7 +111,6 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
-            android:visibility="gone"
             app:headerLayout="@layout/nav_header_main"
             app:menu="@menu/activity_main_drawer" />
     </android.support.v4.widget.DrawerLayout>

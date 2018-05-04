@@ -3,11 +3,10 @@ package com.sh.ethan.sh_loveandroid.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -20,7 +19,6 @@ import android.widget.ImageView;
 import com.sh.ethan.sh_loveandroid.R;
 import com.sh.ethan.sh_loveandroid.appUtils.ToastUtil;
 import com.sh.ethan.sh_loveandroid.base.LoveAndroidActivity;
-import com.sh.ethan.sh_loveandroid.base.LoveAndroidFragment;
 import com.sh.ethan.sh_loveandroid.beans.Home_Banner_Bean;
 import com.sh.ethan.sh_loveandroid.constant.UrlContants;
 import com.sh.ethan.sh_loveandroid.fragment.HomeNewsFragment;
@@ -49,7 +47,7 @@ import butterknife.OnClick;
  */
 public class MainActivity extends LoveAndroidActivity implements NavigationView.OnNavigationItemSelectedListener {
     private List<Home_Banner_Bean> home_banner_beans = new ArrayList<>();
-    private List<LoveAndroidFragment> loveAndroidFragments = new ArrayList<>();
+    private List<Fragment> loveAndroidFragments = new ArrayList<>();
     private String[] tabTitle = {"推荐", "UI", "闲谈", "iOS", "Android"};
     @BindView(R.id.home_banner)
     Banner home_banner;
@@ -102,7 +100,7 @@ public class MainActivity extends LoveAndroidActivity implements NavigationView.
     }
 
     private void showViewPager() {
-        FragmentPagerAdapter pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+        FragmentStatePagerAdapter pagerAdapter = new FragmentStatePagerAdapter(getSupportFragmentManager()) {
 
             @Override
             public int getCount() {

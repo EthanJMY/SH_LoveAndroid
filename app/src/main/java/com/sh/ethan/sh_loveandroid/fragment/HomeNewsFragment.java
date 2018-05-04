@@ -1,12 +1,19 @@
 package com.sh.ethan.sh_loveandroid.fragment;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.BinderThread;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.liaoinstan.springview.container.DefaultFooter;
+import com.liaoinstan.springview.container.DefaultHeader;
+import com.liaoinstan.springview.widget.SpringView;
 import com.sh.ethan.sh_loveandroid.R;
+import com.sh.ethan.sh_loveandroid.activity.LinkWebActivity;
 import com.sh.ethan.sh_loveandroid.adapter.HomeNewsAdapter;
 import com.sh.ethan.sh_loveandroid.appUtils.ToastUtil;
 import com.sh.ethan.sh_loveandroid.base.LoveAndroidFragment;
@@ -31,6 +38,8 @@ import io.saeid.fabloading.LoadingView;
  * Created by ethan on 2018/4/22.
  */
 public class HomeNewsFragment extends LoveAndroidFragment {
+
+    private static HomeNewsFragment fragment;
     private List<Home_News> home_newsList = new ArrayList<>();
     private int page = 0;
     private HomeNewsAdapter homeNewsAdapter = null;
@@ -42,6 +51,8 @@ public class HomeNewsFragment extends LoveAndroidFragment {
     AVLoadingIndicatorView news_loadding;
     @BindView(R.id.nodata)
     ImageView nodata;
+    @BindView(R.id.springView)
+    SpringView springView;
 
     @OnClick({R.id.goTop})
     public void onClick(View v) {
@@ -54,6 +65,13 @@ public class HomeNewsFragment extends LoveAndroidFragment {
         }
     }
 
+    public static HomeNewsFragment getInstance() {
+        if (fragment == null) {
+            fragment = new HomeNewsFragment();
+        }
+        return fragment;
+    }
+
     @Override
     protected int inflateLayout() {
         return R.layout.fragment_homenews_layout;
@@ -61,7 +79,8 @@ public class HomeNewsFragment extends LoveAndroidFragment {
 
     @Override
     protected void initView(View view) {
-
+        springView.setHeader(new DefaultHeader(getParent()));
+        springView.setFooter(new DefaultFooter(getParent()));
     }
 
     @Override
@@ -73,6 +92,21 @@ public class HomeNewsFragment extends LoveAndroidFragment {
     protected void doOperateOnViewCreated() {
         initHomeNewAdapter();
         getHomeNews(page, 0);
+        initListener();
+    }
+
+    private void initListener() {
+        springView.setListener(new SpringView.OnFreshListener() {
+            @Override
+            public void onRefresh() {
+                ToastUtil.showShort("刷新");
+            }
+
+            @Override
+            public void onLoadmore() {
+                ToastUtil.showShort("加载更多");
+            }
+        });
     }
 
     private void initHomeNewAdapter() {
@@ -82,7 +116,16 @@ public class HomeNewsFragment extends LoveAndroidFragment {
             homeNewsAdapter = new HomeNewsAdapter(getContext(), home_newsList, new HomeNewsAdapter.OnClickToReadMore() {
                 @Override
                 public void toReadMore(int position) {
-                    ToastUtil.showShort(home_newsList.get(position).getTitle());
+//                    ToastUtil.showShort(home_newsList.get(position).getTitle());
+                    Intent intent = new Intent();
+                    String url = home_newsList.get(position).getLink();
+                    if (!url.isEmpty()) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("url", url);
+                        intent.putExtras(bundle);
+                        intent.setClass(getActivity(), LinkWebActivity.class);
+                        getActivity().startActivity(intent);
+                    }
                 }
             });
         }
@@ -148,6 +191,7 @@ public class HomeNewsFragment extends LoveAndroidFragment {
                     } else {
                         home_newsList.addAll(home_newss);
                     }
+//                    if (getInstance().isAdded()){
                     if (!home_newsList.isEmpty()) {
                         home_newsRecycler.setVisibility(View.VISIBLE);
                         goTop.setVisibility(View.VISIBLE);
@@ -160,21 +204,26 @@ public class HomeNewsFragment extends LoveAndroidFragment {
                         nodata.setVisibility(View.VISIBLE);
                     }
                     homeNewsAdapter.setDataList(home_newss);
+//                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    home_newsRecycler.setVisibility(View.GONE);
-                    goTop.setVisibility(View.GONE);
-                    news_loadding.setVisibility(View.GONE);
-                    nodata.setVisibility(View.VISIBLE);
+                    if (getInstance().isVisible()) {
+                        home_newsRecycler.setVisibility(View.GONE);
+                        goTop.setVisibility(View.GONE);
+                        news_loadding.setVisibility(View.GONE);
+                        nodata.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 
             @Override
             public void onRequestFail(String msg) {
-                home_newsRecycler.setVisibility(View.GONE);
-                goTop.setVisibility(View.GONE);
-                news_loadding.setVisibility(View.GONE);
-                nodata.setVisibility(View.VISIBLE);
+                if (getInstance().isVisible()) {
+                    home_newsRecycler.setVisibility(View.GONE);
+                    goTop.setVisibility(View.GONE);
+                    news_loadding.setVisibility(View.GONE);
+                    nodata.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

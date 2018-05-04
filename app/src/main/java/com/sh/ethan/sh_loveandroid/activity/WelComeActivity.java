@@ -21,7 +21,7 @@ public class WelComeActivity extends Activity {
         setContentView(R.layout.activity_welcome_layout);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         myHandler=new MyHandler();
-        myHandler.sendEmptyMessageDelayed(1,2500);
+        myHandler.sendEmptyMessageDelayed(1,1500);
     }
     class MyHandler extends Handler{
         @Override

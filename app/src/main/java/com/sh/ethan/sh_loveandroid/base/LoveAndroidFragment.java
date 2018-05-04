@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 
+import com.sh.ethan.sh_loveandroid.appUtils.LogUtils;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -25,6 +27,7 @@ public abstract class LoveAndroidFragment extends Fragment {
     protected abstract void initView(View view);
 
     protected abstract void doOperateOnResume();
+
     protected abstract void doOperateOnViewCreated();
 
     protected LoveAndroidActivity bindActivity;
