@@ -73,7 +73,6 @@ public class MainActivity extends LoveAndroidActivity implements NavigationView.
 
     @Override
     protected void initIntentData(Bundle bundle) {
-
     }
 
 
@@ -89,6 +88,7 @@ public class MainActivity extends LoveAndroidActivity implements NavigationView.
     @Override
     protected void doOperateOnResume() {
         setBarColor(R.color.toolBar);
+        home_viewpager.setOffscreenPageLimit(6);
     }
 
     private void initToolBar() {

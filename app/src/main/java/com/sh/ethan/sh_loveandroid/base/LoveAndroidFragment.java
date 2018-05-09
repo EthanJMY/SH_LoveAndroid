@@ -18,7 +18,7 @@ import butterknife.Unbinder;
 /**
  * Created by ethan on 2018/4/22.
  */
-public abstract class LoveAndroidFragment extends Fragment {
+public abstract class LoveAndroidFragment extends MyFragment {
 
     protected abstract int inflateLayout();//填充布局
 

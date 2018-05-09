@@ -42,7 +42,7 @@
                             android:id="@+id/toolbar"
                             android:layout_width="match_parent"
                             android:layout_height="?attr/actionBarSize"
-                            android:background="@color/toolBar"
+                            android:background="@color/tabLayout"
                             android:elevation="4dp"
                             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"

@@ -15,6 +15,7 @@ import com.liaoinstan.springview.widget.SpringView;
 import com.sh.ethan.sh_loveandroid.R;
 import com.sh.ethan.sh_loveandroid.activity.LinkWebActivity;
 import com.sh.ethan.sh_loveandroid.adapter.HomeNewsAdapter;
+import com.sh.ethan.sh_loveandroid.appUtils.LogUtils;
 import com.sh.ethan.sh_loveandroid.appUtils.ToastUtil;
 import com.sh.ethan.sh_loveandroid.base.LoveAndroidFragment;
 import com.sh.ethan.sh_loveandroid.beans.Home_News;
@@ -74,7 +75,20 @@ public class HomeNewsFragment extends LoveAndroidFragment {
 
     @Override
     protected int inflateLayout() {
+        isViewCreated = true;
         return R.layout.fragment_homenews_layout;
+    }
+
+
+    @Override
+    protected void lazyLoadData() {
+        super.lazyLoadData();
+        if (isViewCreated) {
+            LogUtils.e("lazyLoadData....");
+            initHomeNewAdapter();
+            getHomeNews(page, 0);
+            initListener();
+        }
     }
 
     @Override
@@ -90,9 +104,6 @@ public class HomeNewsFragment extends LoveAndroidFragment {
 
     @Override
     protected void doOperateOnViewCreated() {
-        initHomeNewAdapter();
-        getHomeNews(page, 0);
-        initListener();
     }
 
     private void initListener() {
